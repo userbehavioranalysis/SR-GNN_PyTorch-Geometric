@@ -9,7 +9,7 @@ import math
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch_geometric.nn import GCNConv, GATConv
+from torch_geometric.nn import GCNConv, GATConv, GatedGraphConv
 
 
 class Embedding2Score(nn.Module):
@@ -52,11 +52,7 @@ class GNNModel(nn.Module):
         super(GNNModel, self).__init__()
         self.hidden_size, self.n_node = hidden_size, n_node
         self.embedding = nn.Embedding(self.n_node, self.hidden_size)
-
-        self.gcn1 = GCNConv(self.hidden_size, self.hidden_size)
-        self.gcn2 = GCNConv(self.hidden_size, self.hidden_size)
-        self.gat1 = GATConv(self.hidden_size, self.hidden_size, heads=1)
-        self.gat2 = GATConv(self.hidden_size, self.hidden_size, heads=1)
+        self.gated = GatedGraphConv(self.hidden_size, num_layers=1)
         self.e2s = Embedding2Score(self.hidden_size)
         self.loss_function = nn.CrossEntropyLoss()
         self.reset_parameters()
@@ -70,10 +66,7 @@ class GNNModel(nn.Module):
         x, edge_index, batch = data.x - 1, data.edge_index, data.batch
 
         embedding = self.embedding(x).squeeze()
-        hidden1 = self.gat1(embedding, edge_index)
-        hidden1 = F.relu(hidden1)
-        # hidden = F.dropout(hidden, training=self.training)
-        hidden2 = self.gat2(hidden1, edge_index)
-        hidden2 = F.relu(hidden2)
+        hidden = self.gated(embedding, edge_index)
+        hidden2 = F.relu(hidden)
   
         return self.e2s(hidden2, self.embedding, batch)
