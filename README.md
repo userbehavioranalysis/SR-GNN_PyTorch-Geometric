@@ -2,7 +2,7 @@
 
 A reimplementation of SRGNN. 
 
-![image](https://github.com/RuihongQiu/SR-GNN_PyTorch-Geometric/master/Results.PNG)
+![image](https://github.com/RuihongQiu/SR-GNN_PyTorch-Geometric/raw/master/Results.PNG)
 
 (WARNING: The computation of session embedding only uses embedding W.R.T. nodes in a session graph while in the paper, the calculation based on the whole session sequence, which means they may calculate re-occur items as many times as they occue.)
 
