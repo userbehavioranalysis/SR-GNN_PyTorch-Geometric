@@ -22,3 +22,16 @@ Using PyTorch 1.0, TensorboardX and [PyTorch-Geometric](https://github.com/rusty
 
     cd src
     python main.py --dataset=diginetica
+
+## Citation
+
+If you use make advantage of the SR-GNN model in your research, please cite the following:
+
+    @inproceedings{Wu:2019vb,
+    author = {Wu, Shu and Tang, Yuyuan and Zhu, Yanqiao and Wang, Liang and Xie, Xing and Tan, Tieniu},
+	title = {Session-based Recommendation with Graph Neural Networks},
+	booktitle = {Proceedings of The Twenty-Third AAAI Conference on Artificial Intelligence},
+	series = {AAAI '19},
+	year = {2019},
+	url = {http://arxiv.org/abs/1811.00855}
+    }
