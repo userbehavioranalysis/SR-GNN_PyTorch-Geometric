@@ -9,7 +9,7 @@ import numpy as np
 import logging
 
 
-def forward(model, loader, device, writer, epoch, top_k=20, optimizer=None, scheduler=None, train_flag=True):
+def forward(model, loader, device, writer, epoch, top_k=20, optimizer=None, train_flag=True):
     if train_flag:
         model.train()
     else:
@@ -21,7 +21,6 @@ def forward(model, loader, device, writer, epoch, top_k=20, optimizer=None, sche
 
     for i, batch in enumerate(loader):
         if train_flag:
-            scheduler.step()
             optimizer.zero_grad()
         scores = model(batch.to(device))
         targets = batch.y - 1
